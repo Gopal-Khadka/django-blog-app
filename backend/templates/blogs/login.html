@@ -1,8 +1,8 @@
-{% extends "../base.html" %} {% block title %}Login{% endblock title %}
+{% extends "../base.html" %} {% block title %}Login{% endblock title %} 
 {%block content %}
 
 <form method="post">
-    {% csrf_token %}
+  {% csrf_token %}
   <fieldset>
     <label>
       Username
@@ -21,10 +21,17 @@
         autocomplete="password"
       />
     </label>
-    
   </fieldset>
 
-  <input type="submit" value="Submit" />
+  <div role="group">
+    <input type="submit" value="Login"/>
+    <a
+      role="button"
+      href="{% url 'blogs:register' %}"
+      style="background-color: #198754"
+      >Register</a
+    >
+  </div>
 </form>
 
 {% endblock content %}
