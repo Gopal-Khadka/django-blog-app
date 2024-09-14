@@ -4,11 +4,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blogs Web App</title>
+    <title>{% block title %}{% endblock title %} | Namaste Blogs</title>
     <link rel="stylesheet" href="{% static "css/pico.min.css" %}"
     type="text/css">
   </head>
   <body>
-    {% block content %}{% endblock content %}
+    <!--NAVBAR-->
+    <header class="container">
+      <nav>
+        <ul>
+          <hgroup>
+            <h1>Namaste Blogs</h1>
+            <p>A blog websites forr Nepali Students</p>
+          </hgroup>
+        </ul>
+        <ul>
+          <li><a href="{% url "blogs:index" %}">Home</a></li>
+          <li><a href="{% url "blogs:blogs" %}">Blogs</a></li>
+          <li><a href="{% url "blogs:discussion" %}">Discussion</a></li>
+          <li><a href="{% url "blogs:about" %}">About</a></li>
+          <li><a href="{% url "blogs:contact" %}">Contact</a></li>
+          {% if request.user.is_authenticated %}
+            <li><a href="{% url "blogs:logout" %}">Logout</a></li>
+          {% else %}
+            <li><a href="{% url "blogs:login" %}">Login</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+
+    <!--ALl the content are injected here.-->
+    <main class="container" style="max-width: 70%">
+      {% block content %}{% endblock content %}
+    </main>
+
+    <footer class="container" style="text-align: center;">
+        Copyright &copy; 2024 - Namaste Blogs - All Rights Reserved
+    </footer>
   </body>
 </html>

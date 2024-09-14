@@ -1,0 +1,37 @@
+{% extends "../base.html" %} {% block title %}Contact{% endblock title %}
+{%block content %}
+
+<form>
+  {% csrf_token %}
+  <fieldset>
+    <label>
+      First name
+      <input
+        name="first_name"
+        placeholder="First name"
+        autocomplete="given-name"
+      />
+    </label>
+    <label>
+      Email
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        autocomplete="email"
+      />
+    </label>
+    <label for="query"> Query </label>
+    <textarea
+      name="query"
+      id="query"
+      placeholder="Write your query..."
+      aria-label="Query about website"
+    >
+    </textarea>
+  </fieldset>
+
+  <input type="submit" value="Submit" />
+</form>
+
+{% endblock content %}
