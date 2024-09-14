@@ -1,37 +1,30 @@
-{% extends "../base.html" %} {% block title %}Login{% endblock title %} 
-{%block content %}
+{% extends "../base.html" %}
+{% load socialaccount %}
+{% block title %}
+    Login
+{% endblock title %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <fieldset>
+            <label>
+                Username
+                <input name="username" placeholder="User name" autocomplete="given-name" />
+            </label>
+            <label>
+                Password
+                <input type="password"
+                       name="password"
+                       placeholder="Password"
+                       autocomplete="password" />
+            </label>
+        </fieldset>
+        <div role="group">
+            <input type="submit" value="Login" />
+            <a role="button" href="{% url 'blogs:register' %}" style="background-color: #198754">Register</a>
+        </div>
+    </form>
 
-<form method="post">
-  {% csrf_token %}
-  <fieldset>
-    <label>
-      Username
-      <input
-        name="username"
-        placeholder="User name"
-        autocomplete="given-name"
-      />
-    </label>
-    <label>
-      Password
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        autocomplete="password"
-      />
-    </label>
-  </fieldset>
-
-  <div role="group">
-    <input type="submit" value="Login"/>
-    <a
-      role="button"
-      href="{% url 'blogs:register' %}"
-      style="background-color: #198754"
-      >Register</a
-    >
-  </div>
-</form>
-
+    <a href="{% provider_login_url 'google' %}">Sign up with Google</a>
+</div>
 {% endblock content %}
