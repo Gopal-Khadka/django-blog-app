@@ -4,12 +4,22 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 
+from blogs.forms import ContactForm
+
+
 def index(request):
     return render(request, "blogs/index.html")
 
 
 def contact(request):
-    return render(request, "blogs/contact.html")
+    if request.method == "POST":
+        contact_form = ContactForm(request.POST)
+        if contact_form.is_valid():
+            contact_form.save()
+            return redirect("blogs:index")
+    else:
+        contact_form = ContactForm()
+    return render(request, "blogs/contact.html", {"form": contact_form})
 
 
 def about(request):
