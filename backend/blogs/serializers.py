@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.reverse import reverse
 
 from .models import BlogPost
-from .validators import UniqueTitleValidator
+from .validators import UniqueTitleValidator, ValidateImageFileExtension
 
 
 class BlogPostSerializer(serializers.ModelSerializer):
@@ -35,5 +35,11 @@ class BlogPostSerializer(serializers.ModelSerializer):
             else BlogPost.objects.all()
         )
         validator = UniqueTitleValidator(queryset)
+        validator(value)
+        return value
+
+    def validate_image(self, value):
+
+        validator = ValidateImageFileExtension()
         validator(value)
         return value

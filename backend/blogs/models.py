@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from .validators import ValidateImageFileExtension
 
+from . import utils
 
 class BlogAuthor(models.Model):
     author = models.OneToOneField(User, on_delete=models.CASCADE, related_name="author")
@@ -21,12 +21,7 @@ class BlogPost(models.Model):
         BlogAuthor, on_delete=models.CASCADE, related_name="posts"
     )
     title = models.CharField(max_length=100, blank=True)
-    image = models.ImageField(
-        upload_to="blogs",
-        null=True,
-        blank=True,
-        validators=[ValidateImageFileExtension()],
-    )
+    image = models.ImageField(upload_to=utils.upload_to, null=True, blank=True)
     content = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
