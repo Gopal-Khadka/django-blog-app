@@ -1,10 +1,39 @@
 from rest_framework import serializers
+from rest_framework.reverse import reverse
 
-
-from blogs.models import BlogPost
+from .models import BlogPost
+from .validators import UniqueTitleValidator
 
 
 class BlogPostSerializer(serializers.ModelSerializer):
+    title = serializers.CharField(max_length=100)
+    author = serializers.CharField(source="author.username", read_only=True)
+    edit_url = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = BlogPost
-        fields = "__all__"
+        fields = [
+            "title",
+            "author",
+            "content",
+            "image",
+            "edit_url",
+            "created_at",
+            "updated_at",
+        ]
+
+    def get_edit_url(self, obj):
+        request = self.context.get("request")
+        if request is None:
+            return None
+        return reverse(viewname="blog-edit", request=request, kwargs={"pk": obj.pk})
+
+    def validate_title(self, value):
+        queryset = (
+            BlogPost.objects.exclude(id=self.instance.id)
+            if self.instance
+            else BlogPost.objects.all()
+        )
+        validator = UniqueTitleValidator(queryset)
+        validator(value)
+        return value

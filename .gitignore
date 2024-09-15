@@ -165,3 +165,5 @@ cython_debug/
 # backend/api
 backend/stories
 backend/forum
+
+backend/media
