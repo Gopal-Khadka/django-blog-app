@@ -150,8 +150,14 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+SOCIALACCOUNT_LOGIN_ON_GET = (
+    True  # turns off all intermediate login prompts when signing up
+)
 if DEBUG:
-    SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI ="http://localhost:8000/accounts/google/login/callback/flowName=GeneralOAuthFlow"
+    SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = [
+        "http://localhost:8000/accounts/google/login/callback/flowName=GeneralOAuthFlow",
+        "http://127.0.0.1:8000/accounts/google/login/callback/flowName=GeneralOAuthFlow",
+    ]
 
 
 # ALL AUTH GOOGLE CONFIGS
@@ -163,6 +169,7 @@ SOCIALACCOUNT_PROVIDERS = {
             "key": "",
         },
         "SCOPE": [
+            # access profile info and email info from google
             "profile",
             "email",
         ],

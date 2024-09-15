@@ -21,10 +21,10 @@
         </fieldset>
         <div role="group">
             <input type="submit" value="Login" />
-            <a role="button" href="{% url 'blogs:register' %}" style="background-color: #198754">Register</a>
+            <a role="button"
+               href="{% url 'blogs:register' %}"
+               style="background-color: #198754">Register</a>
         </div>
     </form>
-
-    <a href="{% provider_login_url 'google' %}">Sign up with Google</a>
-</div>
+    <a role="button" href="{% provider_login_url 'google' %}">Sign In with Google</a>
 {% endblock content %}
