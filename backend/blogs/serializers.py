@@ -12,6 +12,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
     edit_url = serializers.SerializerMethodField(read_only=True)
     endpoint = serializers.SerializerMethodField(read_only=True)
     published = serializers.BooleanField(read_only=True)
+    created_at = serializers.DateTimeField(read_only=True, format="%Y-%m-%d")
 
     class Meta:
         model = BlogPost
@@ -24,7 +25,6 @@ class BlogPostSerializer(serializers.ModelSerializer):
             "endpoint",
             "edit_url",
             "created_at",
-            "updated_at",
         ]
 
     def get_edit_url(self, obj):

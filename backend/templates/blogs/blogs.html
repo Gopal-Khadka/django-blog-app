@@ -1,22 +1,59 @@
-{% extends "../base.html" %} {% block title %}Blogs{% endblock title %} 
+{% extends "../base.html" %}
+{% block title %}
+  Blogs
+{% endblock title %}
 {% block content %}
+<!--All the articles will be shown here... -->
+  <div id="blog-list"></div>
+  <!--Script for fetching data from api-->
+  <script>
+  const blogList = document.getElementById("blog-list");
+  const endpoint = "/api/blogs/";
 
-<div class="grid">
-  <article>
-    <header>Header</header>
-    Body
-    <footer>Footer</footer>
-  </article>
-  <article>
-    <header>Header</header>
-    Body
-    <footer>Footer</footer>
-  </article>
-  <article>
-    <header>Header</header>
-    Body
-    <footer>Footer</footer>
-  </article>
-</div>
+  // add blog data to webpage
+  const addBlogs = (data) => {
+    // if no data, show no blog found message
+    if (!data || data.length === 0) {
+      return blogList.innerHTML = `<p>No blogs found</p>`;
+    }
+    let textContent = "";
+    let gridItem;
 
+    data.forEach((post, idx) => {
+      textContent += `
+                    <article>
+                        <header><b>${post.title}</b></header>
+                        <p>${post.content.slice(0, 40)}${
+        post.content.length > 40 ? "..." : ""
+      }</p>
+                        <footer>Created: ${post.created_at}</footer>
+                    </article>
+                `;
+
+      // Create a new grid item every 3 articles or for the last loop with less than 3 articles
+      if ((idx + 1) % 3 === 0 || idx === data.length - 1) {
+        gridItem = document.createElement("div");
+        gridItem.classList.add("grid");
+        gridItem.innerHTML = textContent;
+        blogList.appendChild(gridItem);
+        textContent = ""; // Reset textContent for the next grid item
+      }
+    });
+  };
+
+  // fetching data from api
+  const fetchBlogs = () => {
+    blogList.innerHTML = "";
+    fetch(endpoint)
+      .then((response) => response.json())
+      .then((data) => {
+        addBlogs(data);
+      })
+      .catch((error) => console.error("Error fetching blogs:", error));
+  };
+
+  // Call fetchBlogs() on DOMContentLoaded
+  document.addEventListener("DOMContentLoaded", fetchBlogs);
+  setInterval(fetchBlogs, 10000); // Fetch data every 10 seconds
+  </script>
 {% endblock content %}
