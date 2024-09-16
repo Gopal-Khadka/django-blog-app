@@ -3,8 +3,9 @@ from django.contrib.auth.models import User
 
 from . import utils
 
+
 class BlogAuthor(models.Model):
-    author = models.OneToOneField(User, on_delete=models.CASCADE, related_name="author")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="author")
     name = models.CharField(max_length=100, blank=True, null=True)
     bio = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to="blog_authors", null=True, blank=True)
@@ -22,6 +23,7 @@ class BlogPost(models.Model):
     )
     title = models.CharField(max_length=100, blank=True)
     image = models.ImageField(upload_to=utils.upload_to, null=True, blank=True)
+    published = models.BooleanField(default=False)
     content = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -27,6 +27,16 @@ class UniqueTitleValidator:
         self.lookup = lookup
 
     def __call__(self, value):
+        """
+        Checks if the given `value` already exists in the database.
+
+        Args:
+            value (str): The value to check.
+
+        Raises:
+            ValidationError: If the value already exists in the database.
+        """
+
         if self.queryset.filter(**{f"title__{self.lookup}": value}).exists():
             raise ValidationError("A blog with this title already exists.")
 

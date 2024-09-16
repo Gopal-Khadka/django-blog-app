@@ -5,10 +5,13 @@ from .models import BlogPost
 from .validators import UniqueTitleValidator, ValidateImageFileExtension
 
 
+# TODO: Use this serializer as inline-serializer for AuthorSerializer
 class BlogPostSerializer(serializers.ModelSerializer):
     title = serializers.CharField(max_length=100)
-    author = serializers.CharField(source="author.username", read_only=True)
+    author = serializers.CharField(source="author.user.username", read_only=True)
     edit_url = serializers.SerializerMethodField(read_only=True)
+    endpoint = serializers.SerializerMethodField(read_only=True)
+    published = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = BlogPost
@@ -17,6 +20,8 @@ class BlogPostSerializer(serializers.ModelSerializer):
             "author",
             "content",
             "image",
+            "published",
+            "endpoint",
             "edit_url",
             "created_at",
             "updated_at",
@@ -27,6 +32,12 @@ class BlogPostSerializer(serializers.ModelSerializer):
         if request is None:
             return None
         return reverse(viewname="blog-edit", request=request, kwargs={"pk": obj.pk})
+
+    def get_endpoint(self, obj):
+        request = self.context.get("request")
+        if request is None:
+            return None
+        return reverse(viewname="blog-detail", request=request, kwargs={"pk": obj.pk})
 
     def validate_title(self, value):
         queryset = (
@@ -39,6 +50,9 @@ class BlogPostSerializer(serializers.ModelSerializer):
         return value
 
     def validate_image(self, value):
+        if not value:
+            # if no image, return None without any validation
+            return None
 
         validator = ValidateImageFileExtension()
         validator(value)
