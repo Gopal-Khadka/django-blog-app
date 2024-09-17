@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from tinymce.models import HTMLField
 from . import utils
 
 
@@ -24,7 +24,7 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=100, blank=True)
     image = models.ImageField(upload_to=utils.upload_to, null=True, blank=True)
     published = models.BooleanField(default=False)
-    content = models.TextField(blank=True, null=True)
+    content = HTMLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

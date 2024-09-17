@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os, logging
 from pathlib import Path
 from dotenv import load_dotenv
-
+from filebrowser.sites import site
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -35,7 +35,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "filebrowser",
     "django.contrib.admin",
+    "grappelli",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -47,6 +49,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
     "rest_framework",
+    "tinymce",
     # my apps
     "blogs",
     "api",
@@ -133,6 +136,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"  # for production to serve static files
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -249,5 +253,34 @@ LOGGING = {
 
 
 # MEDIA SETTINGS
-# MEDIA_ROOT = BASE_DIR
+MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
+
+
+# TINYMCE SETTINGS
+# TINYMCE_JS_URL = os.path.join(STATIC_URL, "js/tinymce/tinymce.min.js")
+TINYMCE_DEFAULT_CONFIG = {
+    "theme": "silver",
+    "height": "320px",
+    "width": "960px",
+    "skin": "tinymce-5-dark",  # Set the UI skin
+    "content_css": "tinymce-5-dark",
+    "menubar": "file edit view insert format tools table help",
+    "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code "
+    "fullscreen insertdatetime media table paste code help wordcount spellchecker",
+    "toolbar": "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft "
+    "aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor "
+    "backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | "
+    "fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | "
+    "a11ycheck ltr rtl | showcomments addcomment code",
+    "custom_undo_redo_levels": 10,
+    "language": "en",  # To force a specific language instead of the Django current language.
+}
+TINYMCE_SPELLCHECKER = True
+# TINYMCE_COMPRESSOR = True  #
+# TINYMCE_FILEBROWSER = True
+
+
+# FILEBROWSER SETTINGS
+site.directory = ""
+site.storage.location = STATIC_ROOT

@@ -13,7 +13,7 @@ class BlogPostAdmin(admin.ModelAdmin):
     search_fields = ("title", "content")
 
     def author_email(self, obj):
-        return obj.author.author.email
+        return obj.author.user.email
 
     author_email.short_description = "Author's Email"
 
