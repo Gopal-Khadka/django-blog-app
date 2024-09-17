@@ -73,7 +73,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "blog_home.urls"
-
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",

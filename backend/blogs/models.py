@@ -1,7 +1,7 @@
 import uuid
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.utils.text import slugify
 from tinymce.models import HTMLField
 
 from . import utils
@@ -26,10 +26,18 @@ class BlogPost(models.Model):
         BlogAuthor, on_delete=models.CASCADE, related_name="posts"
     )
     title = models.CharField(max_length=100, blank=True)
+    slug = models.SlugField(unique=True, blank=True, editable=False)
+    unique_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     published = models.BooleanField(default=False)
     content = HTMLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title) + '-' + str(self.unique_id)[:6]
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title + " - " + self.author.name
