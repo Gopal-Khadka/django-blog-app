@@ -1,6 +1,11 @@
 from django.contrib import admin
-from .models import BlogPost, Likes, Comment, BlogAuthor, Contact
+from .models import BlogPost, Likes, Comment, BlogAuthor, Contact, Tag
 from filebrowser.sites import site
+
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ["name"]
 
 
 @admin.register(BlogPost)
@@ -12,6 +17,7 @@ class BlogPostAdmin(admin.ModelAdmin):
         "author_email",
     )
     search_fields = ("title", "content")
+    filter_horizontal = ("tags",)
 
     def author_email(self, obj):
         return obj.author.user.email

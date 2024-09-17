@@ -20,7 +20,13 @@ class BlogAuthor(models.Model):
         return self.name
 
 
-    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class BlogPost(models.Model):
     author = models.ForeignKey(
         BlogAuthor, on_delete=models.CASCADE, related_name="posts"
@@ -30,18 +36,21 @@ class BlogPost(models.Model):
     unique_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     published = models.BooleanField(default=False)
     content = HTMLField(null=True, blank=True)
+    tags = models.ManyToManyField(Tag, related_name="blog_posts", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title) + '-' + str(self.unique_id)[:6]
+            self.slug = slugify(self.title) + "-" + str(self.unique_id)[:6]
         super().save(*args, **kwargs)
-        
+
     @property
     def full_name(self):
         return self.author.user.get_full_name()
+
+    def get_tags_list(self):
+        return self.tags.all().values_list("name", flat=True)
 
     def __str__(self):
         return self.title + " - " + self.author.name

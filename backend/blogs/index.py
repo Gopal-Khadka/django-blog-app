@@ -8,3 +8,5 @@ from .models import BlogPost
 class BlogPostIndex(algoliasearch.AlgoliaIndex):
     should_index = "published"
     fields = ["title", "content", "full_name"]
+    
+    tags = "get_tags_list"

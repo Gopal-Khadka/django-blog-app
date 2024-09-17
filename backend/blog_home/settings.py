@@ -36,9 +36,9 @@ LOGIN_URL = "/login/"
 # Application definition
 
 INSTALLED_APPS = [
-    "grappelli",
     "filebrowser",
     "django.contrib.admin",
+    "grappelli",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
