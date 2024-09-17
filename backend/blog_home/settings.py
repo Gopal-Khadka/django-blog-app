@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "tinymce",
     "easy_thumbnails",
+    # "crispy_forms",
+    # "crispy_bootstrap5",
     # my apps
     "blogs",
     "api",
@@ -312,3 +314,8 @@ THUMBNAIL_DEFAULT_OPTIONS = {
     "quality": 85,
     "format": "WEBP",
 }
+
+
+# Crispy Forms Settings
+# CRISPY_ALLOWED_TEMPLATE_PACKS = ("bootstrap5", "bootstrap4", "bootstrap3")
+# CRISPY_TEMPLATE_PACK = "bootstrap5"
