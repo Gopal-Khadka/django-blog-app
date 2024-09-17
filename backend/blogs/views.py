@@ -27,7 +27,11 @@ def about(request):
 
 
 def blogs(request):
-    return render(request, "blogs/blogs.html")
+    context = {
+        "image":request.user.author.image
+    }
+    
+    return render(request, "blogs/blogs.html",context=context)
 
 
 @login_required(login_url="blogs:login")

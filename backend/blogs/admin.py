@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import BlogPost, Likes, Comment, BlogAuthor, Contact
+from filebrowser.sites import site
 
 
 @admin.register(BlogPost)

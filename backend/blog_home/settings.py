@@ -14,6 +14,7 @@ import os, logging
 from pathlib import Path
 from dotenv import load_dotenv
 from filebrowser.sites import site
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,7 +31,7 @@ SECRET_KEY = "44ebca61af08a6763399c71acbb84ccb25233357cc4afa46c427c4e381eff78d"
 DEBUG = True
 
 ALLOWED_HOSTS = []
-X_FRAME_OPTIONS = 'SAMEORIGIN'  # for django-grappelli to insert images in iframes
+X_FRAME_OPTIONS = "SAMEORIGIN"  # for django-grappelli to insert images in iframes
 
 # Application definition
 
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "rest_framework",
     "tinymce",
+    "easy_thumbnails",
     # my apps
     "blogs",
     "api",
@@ -283,4 +285,28 @@ TINYMCE_DEFAULT_CONFIG = {
 
 # FILEBROWSER SETTINGS
 site.directory = ""
-site.storage.location = STATIC_ROOT
+site.storage.location = MEDIA_ROOT
+
+
+# EASY THUMBNAIL SETTINGS
+
+THUMBNAIL_DEBUG = True
+THUMBNAIL_ALIASES = {
+    "": {
+        "small": {"size": (100, 100), "crop": True},
+        "medium": {"size": (300, 300), "crop": True},
+        "large": {"size": (600, 600), "crop": True},
+    },
+}
+
+THUMBNAIL_PROCESSORS = [
+    "easy_thumbnails.processors.colorspace",
+    "easy_thumbnails.processors.autocrop",
+    "easy_thumbnails.processors.scale_and_crop",
+    "easy_thumbnails.processors.filters",
+]
+
+THUMBNAIL_DEFAULT_OPTIONS = {
+    "quality": 85,
+    "format": "JPEG",
+}

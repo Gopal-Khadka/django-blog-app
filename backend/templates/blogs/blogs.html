@@ -1,12 +1,15 @@
 {% extends "../base.html" %}
+{% load thumbnail %}
+{% load static %}
 {% block title %}
   Blogs
 {% endblock title %}
 {% block content %}
-<!--All the articles will be shown here... -->
-  <div id="blog-list"></div>
-  <!--Script for fetching data from api-->
-  <script>
+  <!--  #TODO:  Use easy thumbnails here-->
+    <!--All the articles will be shown here... -->
+    <div id="blog-list"></div>
+    <!--Script for fetching data from api-->
+    <script>
   const blogList = document.getElementById("blog-list");
   const endpoint = "/api/blogs/";
 
@@ -55,5 +58,5 @@
   // Call fetchBlogs() on DOMContentLoaded
   document.addEventListener("DOMContentLoaded", fetchBlogs);
   setInterval(fetchBlogs, 30000); // Fetch data every 30 seconds
-  </script>
-{% endblock content %}
+    </script>
+  {% endblock content %}

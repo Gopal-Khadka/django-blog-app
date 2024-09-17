@@ -25,9 +25,9 @@ from filebrowser.sites import site
 
 urlpatterns = [
     path("", include("blogs.urls")),
+    path("grappelli/", include("grappelli.urls")),
     path("admin/filebrowser/", site.urls),
     path("admin/", admin.site.urls),
-    path("grappelli/", include("grappelli.urls")),
     path("api/", include("api.urls")),
     path("tinymce/", include("tinymce.urls")),
     path("accounts/", include("allauth.urls")),
