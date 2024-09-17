@@ -38,6 +38,10 @@ class BlogPost(models.Model):
         if not self.slug:
             self.slug = slugify(self.title) + '-' + str(self.unique_id)[:6]
         super().save(*args, **kwargs)
+        
+    @property
+    def full_name(self):
+        return self.author.user.get_full_name()
 
     def __str__(self):
         return self.title + " - " + self.author.name

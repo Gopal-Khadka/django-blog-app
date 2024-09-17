@@ -52,8 +52,10 @@ INSTALLED_APPS = [
     "rest_framework",
     "tinymce",
     "easy_thumbnails",
+    "algoliasearch_django",
     # "crispy_forms",
     # "crispy_bootstrap5",
+    # -------------------
     # my apps
     "blogs",
     "api",
@@ -318,3 +320,11 @@ THUMBNAIL_DEFAULT_OPTIONS = {
 # Crispy Forms Settings
 # CRISPY_ALLOWED_TEMPLATE_PACKS = ("bootstrap5", "bootstrap4", "bootstrap3")
 # CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+
+# ALGOLIA SETTINGS
+ALGOLIA = {
+    "APPLICATION_ID": os.getenv("ALGOLIA_APPLICATION_ID"),
+    "API_KEY": os.getenv("ALGOLIA_API_KEY"),
+    "INDEX_PREFIX": "blogs",
+}
