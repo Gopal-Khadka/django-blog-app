@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -19,6 +20,7 @@ class BlogAuthor(models.Model):
         return self.name
 
 
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 class BlogPost(models.Model):
     author = models.ForeignKey(
         BlogAuthor, on_delete=models.CASCADE, related_name="posts"

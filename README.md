@@ -53,3 +53,19 @@ Open http://localhost:8000 in your browser. Enjoy.
 - `api`: A REST API built with Django rest framework
 - `forum`: A forum for students
 - `stories`: A success stories for the student
+
+## Third Party Packages and Libraries
+
+- `allauth`: For authentication(`eg:Google Authentication`)
+- `easy-thumbnails`: For resizing images in django
+- `django-filebrowser`: For file upload and browsing
+- `grappelli`: For admin panel for file upload and browsing
+- `tinymce`: For text editor in django
+- `rest_framework`: For REST API to list,retrieve,create,update and delete blog articles
+- `algoliasearch-django`: For search engine for blog articles
+- `celery`: For sending emails daily or weekly using celery
+- `faker`: For generating fake data for testing
+
+## LICENSE
+
+This project is licensed under the terms of the GNU Lesser General Public License, version 2.1. See [here](./LICENSE)
