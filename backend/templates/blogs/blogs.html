@@ -6,6 +6,7 @@
 {% endblock title %}
 {% block content %}
   <!--  #TODO:  Use easy thumbnails here-->
+  <img src="{{ request.user.author.image| thumbnail_url:'small'}}" alt="" />
     <!--All the articles will be shown here... -->
     <div id="blog-list"></div>
     <!--Script for fetching data from api-->

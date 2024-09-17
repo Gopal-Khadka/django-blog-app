@@ -255,7 +255,7 @@ LOGGING = {
 
 
 # MEDIA SETTINGS
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
 
@@ -293,6 +293,7 @@ site.storage.location = MEDIA_ROOT
 THUMBNAIL_DEBUG = True
 THUMBNAIL_ALIASES = {
     "": {
+        "avatar": {"size": (50, 50), "crop": True},
         "small": {"size": (100, 100), "crop": True},
         "medium": {"size": (300, 300), "crop": True},
         "large": {"size": (600, 600), "crop": True},
