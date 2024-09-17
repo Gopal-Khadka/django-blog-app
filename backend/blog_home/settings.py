@@ -30,14 +30,14 @@ SECRET_KEY = "44ebca61af08a6763399c71acbb84ccb25233357cc4afa46c427c4e381eff78d"
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+X_FRAME_OPTIONS = 'SAMEORIGIN'  # for django-grappelli to insert images in iframes
 
 # Application definition
 
 INSTALLED_APPS = [
+    "grappelli",
     "filebrowser",
     "django.contrib.admin",
-    "grappelli",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -267,7 +267,7 @@ TINYMCE_DEFAULT_CONFIG = {
     "content_css": "tinymce-5-dark",
     "menubar": "file edit view insert format tools table help",
     "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code "
-    "fullscreen insertdatetime media table paste code help wordcount spellchecker",
+    "fullscreen insertdatetime media table paste code help wordcount",
     "toolbar": "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft "
     "aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor "
     "backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | "
@@ -276,7 +276,7 @@ TINYMCE_DEFAULT_CONFIG = {
     "custom_undo_redo_levels": 10,
     "language": "en",  # To force a specific language instead of the Django current language.
 }
-TINYMCE_SPELLCHECKER = True
+# TINYMCE_SPELLCHECKER = True
 # TINYMCE_COMPRESSOR = True  #
 # TINYMCE_FILEBROWSER = True
 
