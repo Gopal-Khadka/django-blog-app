@@ -1,6 +1,7 @@
 from django import forms
+from tinymce.widgets import TinyMCE
 
-from blogs.models import Contact
+from blogs.models import Contact, BlogPost, BlogAuthor
 from blogs.validators import ValidateEmailDomains
 
 
@@ -30,3 +31,20 @@ class ContactForm(forms.ModelForm):
         if str(name).startswith("admin"):
             raise forms.ValidationError("Name cannot start with 'admin'.")
         return name
+
+
+class CreateBlogForm(forms.ModelForm):
+
+    class Meta:
+        model = BlogPost
+        fields = [
+            "title",
+            "author",
+            "content"
+        ]
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop("user", None)
+        super().__init__(*args, **kwargs)
+        self.fields["author"].initial = self.user.author
+        self.fields["author"].widget.attrs["readonly"] = True

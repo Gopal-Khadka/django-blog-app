@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 
-from blogs.forms import ContactForm
+from blogs.forms import ContactForm, CreateBlogForm
 
 
 def index(request):
@@ -29,6 +29,27 @@ def about(request):
 def blogs(request):
 
     return render(request, "blogs/blogs.html")
+
+
+@login_required
+def create_blogs(request):
+
+    if request.method == "POST":
+        form = CreateBlogForm(request.POST, request.FILES, user=request.user)
+        if form.is_valid():
+            blog = form.save(
+                commit=False
+            )  # Save the blog without committing to the database yet
+            blog.author = request.user.author  # Set the author field to the current user
+            blog.save()  # Save the blog with all form data, including the image
+            return redirect("blogs:blogs")
+    else:
+        form = CreateBlogForm(user=request.user)
+    return render(
+        request,
+        "blogs/create_blogs.html",
+        context={"form": form},
+    )
 
 
 @login_required(login_url="blogs:login")

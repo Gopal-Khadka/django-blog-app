@@ -165,7 +165,7 @@ cython_debug/
 backend/staticfiles
 
 # Tinymce files
-backend/static/tinymce
+# backend/static/js/tinymce
 
 
 # backend/api

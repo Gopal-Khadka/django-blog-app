@@ -7,6 +7,10 @@
     <title>{% block title %}{% endblock title %} | Namaste Blogs</title>
     <link rel="stylesheet" href="{% static "css/pico.min.css" %}"
     type="text/css">
+
+    <!--TINYMCE JS-->
+    <script src="{% static "tinymce/tinymce.min.js" %}"></script>
+    {% comment %} <script src="{% url "tinymce-js" "NAME" %}"></script> {% endcomment %}
   </head>
   <body>
     <!--NAVBAR-->

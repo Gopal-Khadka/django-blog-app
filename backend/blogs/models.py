@@ -24,7 +24,6 @@ class BlogPost(models.Model):
         BlogAuthor, on_delete=models.CASCADE, related_name="posts"
     )
     title = models.CharField(max_length=100, blank=True)
-    image = models.ImageField(upload_to=utils.upload_to, null=True, blank=True)
     published = models.BooleanField(default=False)
     content = HTMLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

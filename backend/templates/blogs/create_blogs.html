@@ -1,0 +1,44 @@
+{% extends "../base.html" %}
+{% load static %}
+{% block title %}
+    Create Blogs
+{% endblock title %}
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+    <script>
+        tinymce.init({
+            selector: 'textarea#id_content',
+            placeholder: "Enter your blog here...",
+            height: 300,
+            skin: "tinymce-5-dark", 
+            content_css: "tinymce-5-dark",
+            plugins: [
+              'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+              'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+              'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | ' +
+            'bold italic backcolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'removeformat | help',
+            menubar: true,
+            plugins: [
+                'autolink', 'codesample', 'link', 'lists',
+                'media', 'table', 'image',
+                'quickbars', 'codesample', 'help'
+            ],
+            quickbars_insert_toolbar: 'quicktable image media codesample',
+            quickbars_selection_toolbar: 'bold italic underline | blocks | blockquote quicklink',
+            contextmenu: 'undo redo | inserttable | cell row column deletetable | help',
+            powerpaste_word_import: 'clean',
+            powerpaste_html_import: 'clean',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
+
+            
+          });
+    </script>
+{% endblock content %}

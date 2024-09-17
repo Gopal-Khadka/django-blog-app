@@ -32,7 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 X_FRAME_OPTIONS = "SAMEORIGIN"  # for django-grappelli to insert images in iframes
-
+LOGIN_URL = "/login/"
 # Application definition
 
 INSTALLED_APPS = [
@@ -83,6 +83,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.static",
             ],
         },
     },
@@ -309,5 +310,5 @@ THUMBNAIL_PROCESSORS = [
 
 THUMBNAIL_DEFAULT_OPTIONS = {
     "quality": 85,
-    "format": "JPEG",
+    "format": "WEBP",
 }

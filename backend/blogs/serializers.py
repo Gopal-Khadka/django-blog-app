@@ -20,7 +20,6 @@ class BlogPostSerializer(serializers.ModelSerializer):
             "title",
             "author",
             "content",
-            "image",
             "published",
             "endpoint",
             "edit_url",
@@ -49,11 +48,11 @@ class BlogPostSerializer(serializers.ModelSerializer):
         validator(value)
         return value
 
-    def validate_image(self, value):
-        if not value:
-            # if no image, return None without any validation
-            return None
+    # def validate_image(self, value):
+    #     if not value:
+    #         # if no image, return None without any validation
+    #         return None
 
-        validator = ValidateImageFileExtension()
-        validator(value)
-        return value
+    #     validator = ValidateImageFileExtension()
+    #     validator(value)
+    #     return value
