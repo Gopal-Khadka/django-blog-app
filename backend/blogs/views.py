@@ -40,7 +40,9 @@ def create_blogs(request):
             blog = form.save(
                 commit=False
             )  # Save the blog without committing to the database yet
-            blog.author = request.user.author  # Set the author field to the current user
+            blog.author = (
+                request.user.author
+            )  # Set the author field to the current user
             blog.save()  # Save the blog with all form data, including the image
             return redirect("blogs:blogs")
     else:
@@ -50,6 +52,10 @@ def create_blogs(request):
         "blogs/create_blogs.html",
         context={"form": form},
     )
+
+
+def show_blogs(request, slug):
+    return render(request, "blogs/show_blogs.html", context={"slug": slug})
 
 
 @login_required(login_url="blogs:login")

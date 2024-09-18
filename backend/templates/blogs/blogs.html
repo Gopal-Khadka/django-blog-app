@@ -2,16 +2,16 @@
 {% load thumbnail %}
 {% load static %}
 {% block title %}
-  Blogs
+  All Blogs
 {% endblock title %}
 {% block content %}
-<a href="{% url 'blogs:blogs-create' %}" role="button">Create new blog</a>
+  <a href="{% url 'blogs:blogs-create' %}" role="button">Create new blog</a>
   <!--  #TODO:  Use easy thumbnails here-->
-  <img src="{{ request.user.author.image| thumbnail_url:'small'}}" alt="" />
-    <!--All the articles will be shown here... -->
-    <div id="blog-list"></div>
-    <!--Script for fetching data from api-->
-    <script>
+  <!-- <img src="{{ request.user.author.image| thumbnail_url:'small' }}" alt="" /> -->
+  <!--All the articles will be shown here... -->
+  <div id="blog-list"></div>
+  <!--Script for fetching data from api-->
+  <script>
   const blogList = document.getElementById("blog-list");
   const endpoint = "/api/blogs/";
 
@@ -25,13 +25,15 @@
     let gridItem;
 
     data.forEach((post, idx) => {
+      const slug = endpoint.replace("api/", "") + post.slug;
       textContent += `
                     <article>
                         <header><b>${post.title}</b></header>
-                        <p>${post.content.slice(0, 40)}${
-        post.content.length > 40 ? "..." : ""
-      }</p>
-                        <footer>Created: ${post.created_at}</footer>
+                        <p>${post.content.slice(0, 100)}</p>
+                        <footer>
+                          See post: 
+                          <a href="${slug}" target="_blank">Show blog</a>
+                        </footer>
                     </article>
                 `;
 
@@ -60,5 +62,5 @@
   // Call fetchBlogs() on DOMContentLoaded
   document.addEventListener("DOMContentLoaded", fetchBlogs);
   setInterval(fetchBlogs, 30000); // Fetch data every 30 seconds
-    </script>
-  {% endblock content %}
+  </script>
+{% endblock content %}

@@ -15,5 +15,6 @@ urlpatterns = [
     # blog urls
     path("blogs/", views.blogs, name="blogs"),
     path("blogs/create/", views.create_blogs, name="blogs-create"),
+    path("blogs/<slug:slug>/", views.show_blogs, name="blogs-show"),
     path("discussion/", views.discussion, name="discussion"),
 ]

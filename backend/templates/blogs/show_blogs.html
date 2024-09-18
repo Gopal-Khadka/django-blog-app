@@ -1,0 +1,54 @@
+{% extends "../base.html" %}
+{% load thumbnail %}
+{% load static %}
+{% block title %}
+    Blogs
+{% endblock title %}
+{% block content %}
+    <div id="blog-list"></div>
+    <!--Script for fetching data from api-->
+    <script>
+  const blogList = document.getElementById("blog-list");
+  const endpoint = "/api/blogs/{{slug|escapejs}}/";
+
+  // add blog data to webpage
+  const addBlogs = (post) => {
+
+    // if no data, show no blog found message
+    if (!post || post.length === 0) {
+      return blogList.innerHTML = `<p>No blogs found</p>`;
+    }
+    // change the title of the page to the title of the blog
+    document.title = post.title
+    // join tags array into a string
+    if (post.tags) {
+      post.tags = post.tags.map((tag) => tag.name).join(", ")
+    }
+
+    textContent = `
+                <article>
+                    <header style="text-align: center; font-size:28px;"><b>${post.title}</b></header>
+                    <p>Tags: ${post.tags}</p>
+                    <p>${post.content}</p>
+                    <footer> Author: ${post.author}</footer>
+                    
+                </article>
+                `;
+    blogList.innerHTML = textContent
+  }
+
+  // fetching data from api
+  const fetchBlogs = () => {
+    blogList.innerHTML = "";
+    fetch(endpoint)
+      .then((response) => response.json())
+      .then((data) => {
+        addBlogs(data);
+      })
+      .catch((error) => console.error("Error fetching blogs:", error));
+  };
+
+  // Call fetchBlogs() on DOMContentLoaded
+  document.addEventListener("DOMContentLoaded", fetchBlogs);
+    </script>
+{% endblock content %}
