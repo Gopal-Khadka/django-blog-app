@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, authentication
 from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
@@ -8,6 +8,8 @@ from blogs.models import BlogPost
 from blogs.serializers import BlogPostSerializer
 
 from . import client
+from .authentication import TokenAuthentication
+from .permissions import IsAuthorPermission
 
 
 class BlogsListAPIView(generics.ListAPIView):
@@ -39,7 +41,8 @@ class BlogEditAPIView(generics.UpdateAPIView):
 class BlogCreateAPIView(generics.CreateAPIView):
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostSerializer
-    permission_classes = [IsAuthenticated, DjangoModelPermissions]
+    authentication_classes = [TokenAuthentication, authentication.SessionAuthentication]
+    permission_classes = [IsAuthenticated, IsAuthorPermission]
 
     def perform_create(self, serializer):
         content = serializer.validated_data.get("content") or None
@@ -90,6 +93,6 @@ class AlgoliaSearchListAPIView(generics.ListAPIView):
             return Response(BlogPost.objects.none(), status=400)
         published = str(request.GET.get("published")) != "0"
         tags = request.GET.get("tags") or None
-        
+
         results = client.perform_search(query, tags=tags, published=published)
         return Response(results, status=200)
