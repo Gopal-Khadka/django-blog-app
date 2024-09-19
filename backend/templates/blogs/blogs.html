@@ -8,7 +8,7 @@
   <a href="{% url 'blogs:blogs-create' %}" role="button">Create new blog</a>
   <a href="{% url 'blogs:blogs-search' %}" role="button">Search blog</a>
   <!--  #TODO:  Use easy thumbnails here-->
-  <!-- <img src="{{ request.user.author.image| thumbnail_url:'small' }}" alt="" /> -->
+  {% comment %} <img src="{{ request.user.author.image| thumbnail_url:'small' }}" alt="" />  {% endcomment %}
   <!--All the articles will be shown here... -->
   <div id="blog-list"></div>
   <!--Script for fetching data from api-->

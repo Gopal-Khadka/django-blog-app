@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import BlogPost, Likes, Comment, BlogAuthor, Contact, Tag
+from .models import BlogPost, Like, Comment, BlogAuthor, Contact, Tag
 from filebrowser.sites import site
 
 
@@ -33,6 +33,6 @@ class BlogAuthorAdmin(admin.ModelAdmin):
     search_fields = ("name", "author__email", "bio")
 
 
-admin.site.register(Likes)
+admin.site.register(Like)
 admin.site.register(Comment)
 admin.site.register(Contact)

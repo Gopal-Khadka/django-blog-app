@@ -40,11 +40,14 @@ class CreateBlogForm(forms.ModelForm):
         fields = [
             "title",
             "author",
-            "content"
+            "public",
+            "published",
+            "tags",
+            "content",
         ]
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
         self.fields["author"].initial = self.user.author
-        self.fields["author"].widget.attrs["readonly"] = True
+        self.fields["author"].widget = forms.HiddenInput()

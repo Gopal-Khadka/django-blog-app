@@ -1,3 +1,4 @@
+from typing import Iterable
 import uuid
 from django.db import models
 from django.contrib.auth.models import User
@@ -18,6 +19,11 @@ class BlogAuthor(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs) -> None:
+        if not self.name:
+            self.name = self.user.get_full_name()
+        return super().save(*args, **kwargs)
 
 
 class Tag(models.Model):
@@ -70,7 +76,7 @@ class Comment(models.Model):
         return self.content + " - " + self.author.username
 
 
-class Likes(models.Model):
+class Like(models.Model):
     post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name="likes")
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="likes")
     created_at = models.DateTimeField(auto_now_add=True)

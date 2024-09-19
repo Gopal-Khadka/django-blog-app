@@ -44,7 +44,8 @@ def create_blogs(request):
                 request.user.author
             )  # Set the author field to the current user
             blog.save()  # Save the blog with all form data, including the image
-            return redirect("blogs:blogs")
+            blog.tags.set(request.POST.getlist("tags"))
+            return redirect("blogs:blogs-show", slug=blog.slug)
     else:
         form = CreateBlogForm(user=request.user)
     return render(
