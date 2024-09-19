@@ -90,7 +90,6 @@ class AlgoliaSearchListAPIView(generics.ListAPIView):
             return Response(BlogPost.objects.none(), status=400)
         published = str(request.GET.get("published")) != "0"
         tags = request.GET.get("tags") or None
-        if not query:
-            return Response([], status=400)
+        
         results = client.perform_search(query, tags=tags, published=published)
         return Response(results, status=200)

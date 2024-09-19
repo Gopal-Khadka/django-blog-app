@@ -7,7 +7,7 @@ from .models import BlogPost
 @register(BlogPost)
 class BlogPostIndex(algoliasearch.AlgoliaIndex):
     should_index = "public"
-    fields = ["title", "content", "full_name", "published"]
+    fields = ["title", "content", "full_name", "published","slug"]
 
     tags = "get_tags_list"
     settings = {

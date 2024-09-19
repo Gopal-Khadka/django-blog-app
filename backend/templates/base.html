@@ -4,13 +4,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}{% endblock title %} | Namaste Blogs</title>
-    <link rel="stylesheet" href="{% static "css/pico.min.css" %}"
-    type="text/css">
-
+    <title>
+      {% block title %}
+      {% endblock title %}
+    | Namaste Blogs</title>
+    <link rel="stylesheet" href="{% static "css/pico.min.css" %}" type="text/css">
     <!--TINYMCE JS-->
     <script src="{% static "tinymce/tinymce.min.js" %}"></script>
-    {% comment %} <script src="{% url "tinymce-js" "NAME" %}"></script> {% endcomment %}
+    <!--CUSTOM CSS-->
+    {% block customsheets %}
+    {% endblock customsheets %}
   </head>
   <body>
     <!--NAVBAR-->
@@ -23,27 +26,40 @@
           </hgroup>
         </ul>
         <ul>
-          <li><a href="{% url "blogs:index" %}">Home</a></li>
-          <li><a href="{% url "blogs:blogs" %}">Blogs</a></li>
-          <li><a href="{% url "blogs:discussion" %}">Discussion</a></li>
-          <li><a href="{% url "blogs:about" %}">About</a></li>
-          <li><a href="{% url "blogs:contact" %}">Contact</a></li>
+          <li>
+            <a href="{% url "blogs:index" %}">Home</a>
+          </li>
+          <li>
+            <a href="{% url "blogs:blogs" %}">Blogs</a>
+          </li>
+          <li>
+            <a href="{% url "blogs:discussion" %}">Discussion</a>
+          </li>
+          <li>
+            <a href="{% url "blogs:about" %}">About</a>
+          </li>
+          <li>
+            <a href="{% url "blogs:contact" %}">Contact</a>
+          </li>
           {% if request.user.is_authenticated %}
-            <li><a href="{% url "blogs:logout" %}">Logout</a></li>
+            <li>
+              <a href="{% url "blogs:logout" %}">Logout</a>
+            </li>
           {% else %}
-            <li><a href="{% url "blogs:login" %}">Login</a></li>
+            <li>
+              <a href="{% url "blogs:login" %}">Login</a>
+            </li>
           {% endif %}
         </ul>
       </nav>
     </header>
-
     <!--ALl the content are injected here.-->
     <main class="container" style="max-width: 70%">
-      {% block content %}{% endblock content %}
+      {% block content %}
+      {% endblock content %}
     </main>
-
     <footer class="container" style="text-align: center;">
-        Copyright &copy; 2024 - Namaste Blogs - All Rights Reserved
+      Copyright &copy; 2024 - Namaste Blogs - All Rights Reserved
     </footer>
   </body>
 </html>

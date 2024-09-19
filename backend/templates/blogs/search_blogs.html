@@ -1,0 +1,40 @@
+{% extends "../base.html" %}
+{% load thumbnail %}
+{% load static %}
+{% block title %}
+    Search Blogs
+{% endblock title %}
+{% block customsheets %}
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/instantsearch.css@8.5.0/themes/reset-min.css"
+          integrity="sha256-KvFgFCzgqSErAPu6y9gz/AhZAvzK48VJASu3DpNLCEQ="
+          crossorigin="anonymous" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/instantsearch.css@8.5.0/themes/satellite-min.css"
+          integrity="sha256-woeV7a4SRDsjDc395qjBJ4+ZhDdFn8AqswN1rlTO64E="
+          crossorigin="anonymous" />
+{% endblock customsheets %}
+{% block content %}
+    <!-- ALgolia search box -->
+    <div id="searchbox"></div>
+    <div id="clear-refinements"></div>
+    <div id="user-list"></div>
+    <div>
+        <h2>Published</h2>
+        <div id="published-list"></div>
+    </div>
+    <div id="hits"></div>
+    <!-- Content area -->
+    <div id="content-container"></div>
+    <!-- Instant js scripts-->
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.24.0/dist/algoliasearch-lite.umd.js"
+            integrity="sha256-b2n6oSgG4C1stMT/yc/ChGszs9EY/Mhs6oltEjQbFCQ="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.74.0/dist/instantsearch.production.min.js"
+            integrity="sha256-1OlwSxFMcBXdQtWWvx95HkDw88ZSOde0gyii+lyOkB4="
+            crossorigin="anonymous"></script>
+    <script src="{% static 'js/algolia_client.js' %}"></script>
+
+
+    </script>
+{% endblock content %}

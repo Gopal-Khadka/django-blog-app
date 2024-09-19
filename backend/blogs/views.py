@@ -58,6 +58,10 @@ def show_blogs(request, slug):
     return render(request, "blogs/show_blogs.html", context={"slug": slug})
 
 
+def search_blogs(request):
+    return render(request, "blogs/search_blogs.html")
+
+
 @login_required(login_url="blogs:login")
 def discussion(request):
     return render(request, "blogs/discussion.html")

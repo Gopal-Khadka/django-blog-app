@@ -6,6 +6,7 @@
 {% endblock title %}
 {% block content %}
   <a href="{% url 'blogs:blogs-create' %}" role="button">Create new blog</a>
+  <a href="{% url 'blogs:blogs-search' %}" role="button">Search blog</a>
   <!--  #TODO:  Use easy thumbnails here-->
   <!-- <img src="{{ request.user.author.image| thumbnail_url:'small' }}" alt="" /> -->
   <!--All the articles will be shown here... -->
