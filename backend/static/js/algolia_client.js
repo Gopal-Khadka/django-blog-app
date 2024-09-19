@@ -28,8 +28,6 @@ search.addWidgets([
       item: `
         <a style="color: black;" href="${window.location.origin}/blogs/{{slug}}">
           <div> {{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}} </div>
-          <div> {{#helpers.highlight}}{ "attribute": "content" }{{/helpers.highlight}} </div>
-          <p> {{published}}</p> 
         </a>
               `,
     },
