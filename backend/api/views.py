@@ -1,9 +1,13 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 from rest_framework.exceptions import NotFound
+from rest_framework.response import Response
+
 
 from blogs.models import BlogPost
 from blogs.serializers import BlogPostSerializer
+
+from . import client
 
 
 class BlogsListAPIView(generics.ListAPIView):
@@ -72,3 +76,21 @@ class BlogDeleteAPIView(generics.DestroyAPIView):
             return BlogPost.objects.get(slug=slug)
         except BlogPost.DoesNotExist:
             raise NotFound("Blog post not found")
+
+
+# Algolia Search API CLIENT
+class AlgoliaSearchListAPIView(generics.ListAPIView):
+    def get(self, request, *args, **kwargs):
+        # user = None
+        # only return searches by current user
+        # if request.user.is_authenticated:
+        #     user = request.user.username
+        query = request.GET.get("q")
+        if query is None:
+            return Response(BlogPost.objects.none(), status=400)
+        published = str(request.GET.get("published")) != "0"
+        tags = request.GET.get("tags") or None
+        if not query:
+            return Response([], status=400)
+        results = client.perform_search(query, tags=tags, published=published)
+        return Response(results, status=200)

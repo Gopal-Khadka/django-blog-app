@@ -11,4 +11,7 @@ urlpatterns = [
     path(
         "blogs/<slug>/delete/", views.BlogDeleteAPIView.as_view(), name="blog-delete"
     ),
+    
+    # search api view 
+    path("blogs/search", views.AlgoliaSearchListAPIView.as_view(), name="blog-search"),
 ]

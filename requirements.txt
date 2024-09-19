@@ -24,6 +24,7 @@ cryptography==43.0.1
 cssbeautifier==1.15.1
 Django==5.1.1
 django-allauth==64.2.1
+django-cors-headers==4.4.0
 django-crispy-forms==2.3
 django-filebrowser==4.0.3
 django-grappelli==3.0.9

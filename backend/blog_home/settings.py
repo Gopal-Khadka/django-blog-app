@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "algoliasearch_django",
     # "crispy_forms",
     # "crispy_bootstrap5",
+    "corsheaders",
     # -------------------
     # my apps
     "blogs",
@@ -66,6 +67,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -328,3 +330,14 @@ ALGOLIA = {
     "API_KEY": os.getenv("ALGOLIA_API_KEY"),
     "INDEX_PREFIX": "blogs",
 }
+
+
+# DJANG0-CORS-HEADERS
+CORS_ALLOWED_ORIGINS = []
+if DEBUG:
+    CORS_ALLOWED_ORIGINS += [
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+    ]
+# CORS_URLS_REGEX = r"^/api/.*$"
+# CORS_ALLOW_ALL_ORIGINS = True

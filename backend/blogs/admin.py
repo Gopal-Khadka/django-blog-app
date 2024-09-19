@@ -13,8 +13,10 @@ class BlogPostAdmin(admin.ModelAdmin):
     list_display = (
         "title",
         "author",
-        "created_at",
+        "public",
+        "published",
         "author_email",
+        "created_at",
     )
     search_fields = ("title", "content")
     filter_horizontal = ("tags",)

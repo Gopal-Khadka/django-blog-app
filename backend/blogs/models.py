@@ -34,6 +34,7 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=100, blank=True)
     slug = models.SlugField(unique=True, blank=True, editable=False)
     unique_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    public = models.BooleanField(default=False)
     published = models.BooleanField(default=False)
     content = HTMLField(null=True, blank=True)
     tags = models.ManyToManyField(Tag, related_name="blog_posts", blank=True)
