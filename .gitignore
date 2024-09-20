@@ -173,3 +173,7 @@ backend/stories
 backend/forum
 
 backend/media
+
+
+# py files
+request.py

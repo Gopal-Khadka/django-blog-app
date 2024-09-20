@@ -1,6 +1,5 @@
 from algoliasearch_django import algolia_engine
 
-
 def get_client():
     """
     Returns the Algolia search client.

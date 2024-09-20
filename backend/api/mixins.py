@@ -1,4 +1,5 @@
-from rest_framework import permissions,authentication
+from rest_framework import permissions, authentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from .authentication import TokenAuthentication
 from .permissions import IsAuthorPermission
 
@@ -8,4 +9,8 @@ class AuthorPermissionMixin:
 
 
 class AuthenticationMixin:
-    authentication_classes = [TokenAuthentication, authentication.SessionAuthentication]
+    authentication_classes = [
+        JWTAuthentication,
+        TokenAuthentication,
+        authentication.SessionAuthentication,
+    ]

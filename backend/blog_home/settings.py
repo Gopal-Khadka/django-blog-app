@@ -154,6 +154,21 @@ STATIC_ROOT = BASE_DIR / "staticfiles"  # for production to serve static files
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# DRF Settings
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        # ordering of these matters for jwt authentication
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "api.authentication.TokenAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ],
+    # "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    # "PAGE_SIZE": 10,
+}
+
 
 # DJANGO ALL AUTH SETTINGS
 AUTHENTICATION_BACKENDS = (
