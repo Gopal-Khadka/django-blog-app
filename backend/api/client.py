@@ -32,7 +32,7 @@ def perform_search(query, **kwargs):
     Keyword Args:
         tags (list[str]): A list of tags to filter by.
         published (bool): If True, only published blogs will be returned.
-        user (str): If provided, only products created by the specified user will be returned.
+        user (str): If provided, only blogs created by the specified user will be returned.
     Returns:
         algoliasearch.response.SearchResponse: The results of the search query.
     Example:

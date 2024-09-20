@@ -8,8 +8,7 @@ from blogs.models import BlogPost
 from blogs.serializers import BlogPostSerializer
 
 from . import client
-from .authentication import TokenAuthentication
-from .permissions import IsAuthorPermission
+from .mixins import AuthorPermissionMixin, AuthenticationMixin
 
 
 class BlogsListAPIView(generics.ListAPIView):
@@ -17,10 +16,11 @@ class BlogsListAPIView(generics.ListAPIView):
     serializer_class = BlogPostSerializer
 
 
-class BlogEditAPIView(generics.UpdateAPIView):
+class BlogEditAPIView(
+    AuthenticationMixin, AuthorPermissionMixin, generics.UpdateAPIView
+):
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostSerializer
-    permission_classes = [IsAuthenticated, DjangoModelPermissions]
     lookup_field = "slug"
 
     def get_object(self):
@@ -38,11 +38,11 @@ class BlogEditAPIView(generics.UpdateAPIView):
         serializer.save(content=content)
 
 
-class BlogCreateAPIView(generics.CreateAPIView):
+class BlogCreateAPIView(
+    AuthenticationMixin, AuthorPermissionMixin, generics.CreateAPIView
+):
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostSerializer
-    authentication_classes = [TokenAuthentication, authentication.SessionAuthentication]
-    permission_classes = [IsAuthenticated, IsAuthorPermission]
 
     def perform_create(self, serializer):
         content = serializer.validated_data.get("content") or None
@@ -65,10 +65,11 @@ class BlogDetailAPIView(generics.RetrieveAPIView):
             raise NotFound("Blog post not found")
 
 
-class BlogDeleteAPIView(generics.DestroyAPIView):
+class BlogDeleteAPIView(
+    AuthenticationMixin, AuthorPermissionMixin, generics.DestroyAPIView
+):
     serializer_class = BlogPostSerializer
     lookup_field = "slug"
-    permission_classes = [IsAuthenticated, DjangoModelPermissions]
 
     def get_queryset(self):
         return BlogPost.objects.filter(author=self.request.user.author)
@@ -82,12 +83,13 @@ class BlogDeleteAPIView(generics.DestroyAPIView):
 
 
 # Algolia Search API CLIENT
-class AlgoliaSearchListAPIView(generics.ListAPIView):
+class AlgoliaSearchListAPIView(AuthenticationMixin, generics.ListAPIView):
+
     def get(self, request, *args, **kwargs):
-        # user = None
+        user = None
         # only return searches by current user
-        # if request.user.is_authenticated:
-        #     user = request.user.username
+        if request.user.is_authenticated:
+            user = request.user.username
         query = request.GET.get("q")
         if query is None:
             return Response(BlogPost.objects.none(), status=400)
@@ -95,4 +97,5 @@ class AlgoliaSearchListAPIView(generics.ListAPIView):
         tags = request.GET.get("tags") or None
 
         results = client.perform_search(query, tags=tags, published=published)
+        # results = client.perform_search(query, tags=tags, published=published,user=user)
         return Response(results, status=200)
