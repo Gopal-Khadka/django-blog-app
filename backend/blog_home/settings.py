@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os, logging
+from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 from filebrowser.sites import site
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "rest_framework",
     "rest_framework.authtoken",
+    "rest_framework_simplejwt",
     "tinymce",
     "easy_thumbnails",
     "algoliasearch_django",
@@ -342,3 +344,16 @@ if DEBUG:
     ]
 # CORS_URLS_REGEX = r"^/api/.*$"
 # CORS_ALLOW_ALL_ORIGINS = True
+
+
+# JWT settings
+SIMPLE_JWT = {
+    # "AUTH_HEADER_TYPES": ("JWT",),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "ACCESS_TOKEN_LIFETIME": timedelta(
+        seconds=30
+    ),  #  short-lived token that is used to authenticate requests to protected resources.
+    "REFRESH_TOKEN_LIFETIME": timedelta(
+        minutes=1
+    ),  #  long-lived token used to obtain new access tokens without requiring the user to log in again.
+}
