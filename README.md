@@ -15,6 +15,15 @@ A blog web application built with Django for students trying to leave their home
 - Google Authentication
 - Success stories for the student viewers
 
+## TODO
+
+- User Profile Customization and Personalization
+- Better UI
+- Badges,Achievements,Leaderboards and Analytics
+- Social Media Integration(Share blogs on social media)
+- Blog Feedback Polls
+- Donation and Sponsorship
+
 ## Installation
 
 ```bash
