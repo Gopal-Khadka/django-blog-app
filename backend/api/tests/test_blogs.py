@@ -1,12 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+from django.forms import model_to_dict
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 
-from blogs.models import BlogPost, BlogAuthor
+from blogs.models import BlogPost, BlogAuthor, Tag
+from api.client import get_index
 
 User = get_user_model()
 
@@ -27,14 +29,20 @@ class BlogAPITest(APITestCase):
             "content": "This is a test blog content.",
             "author_id": self.blog_author.pk,
         }
+        self.tag = Tag.objects.create(name="Django")
+
         self.blog = BlogPost.objects.create(**self.blog_data)
         self.blog_create_url = reverse("blog-create")
         self.blog_list_url = reverse("blog-list")
         self.blog_detail_url = reverse("blog-detail", args=[self.blog.slug])
         self.blog_delete_url = reverse("blog-delete", args=[self.blog.slug])
         self.blog_update_url = reverse("blog-edit", args=[self.blog.slug])
+        self.blog_search_url = reverse("blog-search")
 
         self.add_user_permissions()
+
+        # algolia index search
+        self.index = get_index()
 
     def authenticate(self):
         """
@@ -134,3 +142,15 @@ class BlogAPITest(APITestCase):
         response = self.client.delete(self.blog_delete_url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(BlogPost.objects.count(), 0)
+
+    def test_algolia_indexing(self):
+        self.authenticate()
+        blog = self.blog_data.copy()
+        blog["objectID"] = self.blog.pk
+
+        result = self.index.save_object(blog).raw_responses[0]
+        obj_exists = self.index.exists(blog)
+
+        self.assertIn("objectIDs", result,msg="Blog is successfully indexed in Algolia.")
+        self.assertIn("taskID", result)
+        self.assertTrue(obj_exists, "Blog exists in algolia index.")
