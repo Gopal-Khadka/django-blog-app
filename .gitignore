@@ -168,10 +168,8 @@ backend/staticfiles
 # backend/static/js/tinymce
 
 
-# backend/api
+# backend folders
 backend/stories
-backend/forum
-
 backend/media
 
 
