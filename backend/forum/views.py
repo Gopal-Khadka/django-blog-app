@@ -1,10 +1,12 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
 from .models import Category, Thread, Post
 
 
-class CategoryTemplateView(TemplateView):
+class CategoryTemplateView(LoginRequiredMixin, TemplateView):
     template_name = "forum/index.html"
 
     def get_context_data(self, **kwargs):
@@ -13,6 +15,7 @@ class CategoryTemplateView(TemplateView):
         return context
 
 
+@login_required
 def show_threads(request, id):
     context = {
         "threads": Thread.objects.filter(category=id),
@@ -21,6 +24,7 @@ def show_threads(request, id):
     return render(request, "forum/threads.html", context=context)
 
 
+@login_required
 def show_posts(request, cat_id, thread_id):
     id = thread_id
     context = {

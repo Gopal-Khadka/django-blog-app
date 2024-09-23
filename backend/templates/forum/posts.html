@@ -4,11 +4,14 @@
 {% endblock title %}
 {% block content %}
     <h2>{{ thread.title }}</h2>
-    {% for post in posts %}
-        <article id="post_id_{{ post.id }}">
-            <a href="#post_id_{{ post.id }}">
+    {% if posts|length == 0 %}
+        <article style="color:red;">There are no posts in this thread.</article>
+    {% else %}
+        {% for post in posts %}
+            <article id="post_id_{{ post.id }}">
+                <a href="#post_id_{{ post.id }}">Link</a>:
                 {{ post.content }}
-            </a>
-        </article>
-    {% endfor %}
+            </article>
+        {% endfor %}
+    {% endif %}
 {% endblock content %}

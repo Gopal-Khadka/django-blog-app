@@ -5,7 +5,7 @@
 {% block content %}
     <h2>{{ category.name }}</h2>
     {% if  threads|length == 0 %}
-        <article>There are no threads in "{{ category.name }}"</article>
+        <article style="color:red;">There are no threads in this category.</article>
     {% else %}
         {% for thread in threads %}
             <article>
