@@ -8,6 +8,10 @@ class AuthorPermissionMixin:
     permission_classes = [permissions.IsAdminUser, IsAuthorPermission]
 
 
+class ForumPermissionMixin:
+    permission_classes = [permissions.IsAuthenticated]
+
+
 class AuthenticationMixin:
     authentication_classes = [
         JWTAuthentication,

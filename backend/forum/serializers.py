@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rest_framework.reverse import reverse
+from rest_framework.validators import UniqueValidator,ValidationError
 from django.utils.text import slugify
 
 from .models import Category, Post, Thread
@@ -34,3 +35,13 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ["name", "threads"]
+        
+    def validate_name(self, value):
+        queryset = (
+            Category.objects.exclude(id=self.instance.id)
+            if self.instance
+            else Category.objects.all()
+        )
+        validator = UniqueValidator(queryset,message="Given category name already exists.")
+        validator(value,self.fields["name"])
+        return value

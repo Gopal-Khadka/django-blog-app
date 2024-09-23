@@ -25,7 +25,7 @@ urlpatterns = [
     
     # forum views
     path("forum/", forum_views.ForumListAPIView.as_view(), name="forum-list"),
-    # path("forum/create/", blog_views.BlogCreateAPIView.as_view(), name="blog-create"),
+    path("forum/create/", forum_views.ForumCreateAPIView.as_view(), name="forum-create"),
     # path("forum/<slug>/", blog_views.BlogDetailAPIView.as_view(), name="blog-detail"),
     # path("forum/<slug>/update/", blog_views.BlogEditAPIView.as_view(), name="blog-edit"),
     # path("forum/<slug>/delete/", blog_views.BlogDeleteAPIView.as_view(), name="blog-delete"),
