@@ -1,0 +1,16 @@
+{% extends "../base.html" %}
+{% block title %}
+    Threads
+{% endblock title %}
+{% block content %}
+    <h2>{{ category.name }}</h2>
+    {% if  threads|length == 0 %}
+        <article>There are no threads in "{{ category.name }}"</article>
+    {% else %}
+        {% for thread in threads %}
+            <article>
+                <a href="{% url 'forum:show-posts' cat_id=category.id thread_id=thread.id %}">{{ thread.title }}</a>
+            </article>
+        {% endfor %}
+    {% endif %}
+{% endblock content %}

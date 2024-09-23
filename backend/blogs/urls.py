@@ -17,7 +17,4 @@ urlpatterns = [
     path("blogs/create/", views.create_blogs, name="blogs-create"),
     path("blogs/search/", views.search_blogs, name="blogs-search"),
     path("blogs/<slug:slug>/", views.show_blogs, name="blogs-show"),
-    
-    # discussion urls
-    path("discussion/", views.discussion, name="discussion"),
 ]

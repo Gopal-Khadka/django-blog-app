@@ -32,6 +32,7 @@ urlpatterns = [
     path("tinymce/", include("tinymce.urls")),
     path("accounts/", include("allauth.urls")),
     path("accounts/", include("allauth.socialaccount.urls")),
+    path("forum/",include("forum.urls"))
 ]
 
 # for media files in debug mode
