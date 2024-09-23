@@ -1,5 +1,4 @@
-from rest_framework import generics, authentication
-from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
+from rest_framework import generics
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 
@@ -7,8 +6,8 @@ from rest_framework.response import Response
 from blogs.models import BlogPost
 from blogs.serializers import BlogPostSerializer
 
-from . import client
-from .mixins import AuthorPermissionMixin, AuthenticationMixin
+from api import client
+from api.mixins import AuthorPermissionMixin, AuthenticationMixin
 
 
 class BlogsListAPIView(generics.ListAPIView):
