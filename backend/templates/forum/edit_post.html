@@ -1,0 +1,48 @@
+{% extends "../base.html" %}
+{% load static %}
+{% block title %}
+    Edit Post
+{% endblock title %}
+{% block content %}
+
+    {{ form.as_p }}
+    <input type="submit" value="Edit Post" id="edit-btn" />
+
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Check if this cookie string begins with the name we want
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrfToken = getCookie('csrftoken');
+        
+        const endpoint = `{{endpoint}}`
+        const edit_btn = document.querySelector("#edit-btn")
+        const content = document.querySelector("#id_content")
+        edit_btn.addEventListener("click", () => {
+            const data = {
+                "content": content.value
+            }
+            const response =  fetch(endpoint, {
+                    method: "PUT",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken, // Add the CSRF token here
+                    },
+                    body: JSON.stringify(data)
+                }).then((res) => res.json())
+                .catch(error => console.error('Fetch error:', error));
+            
+        })
+    </script>
+{% endblock content %}

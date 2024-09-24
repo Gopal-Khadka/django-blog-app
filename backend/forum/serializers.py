@@ -28,7 +28,7 @@ class PostSerializer(PostInlineSerializer):
         if request is None:
             return None
         return reverse(
-            viewname="post-edit",
+            viewname="api:post-edit",
             request=request,
             kwargs={"id": obj.pk},
         )
@@ -38,7 +38,7 @@ class PostSerializer(PostInlineSerializer):
         if request is None:
             return None
         return reverse(
-            viewname="post-delete",
+            viewname="api:post-delete",
             request=request,
             kwargs={"id": obj.pk},
         )

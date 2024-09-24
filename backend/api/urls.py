@@ -7,6 +7,8 @@ from rest_framework_simplejwt.views import (
 )
 from .views import blog_views, forum_views
 
+app_name = "api"
+
 urlpatterns = [
     # path("blogs/", views.BlogsListCreateAPIView.as_view(), name="blog"),
     path("blogs/", blog_views.BlogsListAPIView.as_view(), name="blog-list"),

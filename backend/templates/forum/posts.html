@@ -11,7 +11,7 @@
     {% else %}
         {% for post in posts %}
             <article id="post_id_{{ post.id }}">
-                <a href="#post_id_{{ post.id }}">Link</a>:
+                <a href="#post_id_{{ post.id }}">Link</a>
                 {% if post.user.author.image %}
                     <img src="{{ post.user.author.image|thumbnail_url:'avatar' }}"
                          title="{{ post.user.username }}"
@@ -21,7 +21,12 @@
                     <img src="{% static "img/hacker.png" %}" title="{{ post.user.username }}" width="50">
                 {% endif %}
                 {{ post.content }}
+                {% if post.user == request.user %}
+                <a href="{% url "forum:edit-post" post_id=post.id%}">Edit</a>
+                <a href="{% url "forum:delete-post" post_id=post.id%}">Delete</a>
+                {% endif %}
             </article>
         {% endfor %}
     {% endif %}
+   
 {% endblock content %}

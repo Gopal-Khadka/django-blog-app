@@ -1,0 +1,48 @@
+{% extends "../base.html" %}
+{% load static %}
+{% block title %}
+    Delete Post
+{% endblock title %}
+{% block content %}
+    <article>{{ post.content }}</article>
+    <input type="submit" value="Delete Post" id="del-btn" />
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Check if this cookie string begins with the name we want
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrfToken = getCookie('csrftoken');
+        
+        const endpoint = `{{endpoint}}`
+        const del_btn = document.querySelector("#del-btn")
+        del_btn.addEventListener("click", () => {
+            const response =  fetch(endpoint, {
+                    method: "DELETE",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken, // Add the CSRF token here
+                    }
+                })
+                .then((response)=>{
+                    if (response.ok) {
+                        // Status code 200-299 indicates success
+                        alert('Post deleted successfully');
+                    } else {
+                        alert('Error deleting post:', response.status);
+                    }})
+                .catch(error => console.error('Delete error:', error));
+            
+        })
+    </script>
+{% endblock content %}
