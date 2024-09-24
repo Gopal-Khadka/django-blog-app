@@ -4,7 +4,6 @@ from rest_framework.reverse import reverse
 from django.utils.text import slugify
 
 from .models import BlogPost, Tag
-from .validators import UniqueTitleValidator, ValidateImageFileExtension
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -21,7 +20,9 @@ class BlogPostSerializer(serializers.ModelSerializer):
     endpoint = serializers.SerializerMethodField(read_only=True)
     published = serializers.BooleanField(read_only=True)
     created_at = serializers.DateTimeField(read_only=True, format="%Y-%m-%d")
-    tags = TagSerializer(many=True, read_only=True)  # Inline-serializer (To display tags)
+    tags = TagSerializer(
+        many=True, read_only=True
+    )  # Inline-serializer (To display tags)
     tags_ids = serializers.PrimaryKeyRelatedField(
         queryset=Tag.objects.all(), many=True, write_only=True
     )  # To accept tag IDs
@@ -67,7 +68,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
         instance.title = validated_data.get("title", instance.title)
         instance.slug = slugify(instance.title) + "-" + str(instance.unique_id)[:6]
         instance.content = validated_data.get("content", instance.content)
-        
+
         # add tags to blogpost
         tags_ids = validated_data.pop("tags_ids", [])
         instance = super().update(instance, validated_data)

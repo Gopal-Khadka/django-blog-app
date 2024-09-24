@@ -8,6 +8,10 @@ class AuthorPermissionMixin:
     permission_classes = [permissions.IsAdminUser, IsAuthorPermission]
 
 
+class ForumCreatePermissionMixin:
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+
+
 class ForumPermissionMixin:
     permission_classes = [permissions.IsAuthenticated]
 

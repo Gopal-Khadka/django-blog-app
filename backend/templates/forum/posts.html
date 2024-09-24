@@ -16,8 +16,7 @@
                     <img src="{{ post.user.author.image|thumbnail_url:'avatar' }}"
                          title="{{ post.user.username }}">
                 {% else %}
-                    <img src="{% static "img/hacker.png" %}"
-                         title="{{ post.user.username }}" width="50">
+                    <img src="{% static "img/hacker.png" %}" title="{{ post.user.username }}" width="50">
                 {% endif %}
                 {{ post.content }}
             </article>

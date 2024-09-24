@@ -34,6 +34,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 X_FRAME_OPTIONS = "SAMEORIGIN"  # for django-grappelli to insert images in iframes
 LOGIN_URL = "/login/"
+
 # Application definition
 
 INSTALLED_APPS = [
