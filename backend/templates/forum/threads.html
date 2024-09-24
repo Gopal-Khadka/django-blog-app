@@ -9,7 +9,7 @@
     {% else %}
         {% for thread in threads %}
             <article>
-                <a href="{% url 'forum:show-posts' cat_id=category.id thread_id=thread.id %}">{{ thread.title }}</a>
+                <a href="{% url 'forum:show-posts' thread_id=thread.id %}">{{ thread.title }}</a>
             </article>
         {% endfor %}
     {% endif %}

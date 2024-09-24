@@ -25,10 +25,10 @@ def show_threads(request, id):
 
 
 @login_required
-def show_posts(request, cat_id, thread_id):
+def show_posts(request, thread_id):
     id = thread_id
     context = {
-        "posts": Post.objects.filter(thread=id),
+        "posts": Post.objects.filter(thread=id).order_by("-created_at"),
         "thread": Thread.objects.filter(id=id).first(),
     }
     return render(request, "forum/posts.html", context=context)

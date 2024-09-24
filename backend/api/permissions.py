@@ -12,3 +12,8 @@ class IsAuthorPermission(permissions.DjangoModelPermissions):
         "PATCH": ["%(app_label)s.change_%(model_name)s"],
         "DELETE": ["%(app_label)s.delete_%(model_name)s"],
     }
+
+
+class IsAuthorOrAdminUser(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return obj.user == request.user or request.user.is_staff
