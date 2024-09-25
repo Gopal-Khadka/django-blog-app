@@ -373,3 +373,9 @@ SIMPLE_JWT = {
         minutes=1
     ),  #  long-lived token used to obtain new access tokens without requiring the user to log in again.
 }
+
+# EMAIL SETTINGS
+EMAIL_HOST= os.getenv("EMAIL_HOST")
+EMAIL_PORT=os.getenv("EMAIL_PORT")
+# EMAIL_HOST_USER=
+# EMAIL_HOST_PASSWORD =

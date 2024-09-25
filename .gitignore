@@ -169,7 +169,6 @@ backend/staticfiles
 
 
 # backend folders
-backend/stories
 backend/media
 
 
