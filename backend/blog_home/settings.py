@@ -60,6 +60,8 @@ INSTALLED_APPS = [
     # "crispy_forms",
     # "crispy_bootstrap5",
     "corsheaders",
+    "django_celery_results",
+    "django_celery_beat",
     # -------------------
     # my apps
     "blogs",
@@ -136,7 +138,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Kathmandu"
 
 USE_I18N = True
 
@@ -221,62 +223,62 @@ if not os.path.exists(LOG_DIR):
     os.makedirs(LOG_DIR)
 
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "verbose": {
-            "format": "{levelname} {asctime} {module} {message}",
-            "style": "{",
-        },
-        "detailed": {
-            "format": "{levelname} {asctime} {module} {message} {process:d} {thread:d} ",
-            "style": "{",
-        },
-    },
-    "handlers": {
-        "file": {
-            "level": "DEBUG",
-            "class": "logging.FileHandler",
-            "filename": os.path.join(LOG_DIR, "django_debug.log"),
-            "formatter": "detailed",
-        },
-        "error_file": {
-            "level": "ERROR",
-            "class": "logging.FileHandler",
-            "filename": os.path.join(LOG_DIR, "django_error.log"),
-            "formatter": "verbose",
-        },
-        "debug_info_file": {
-            "level": "DEBUG",
-            "class": "logging.FileHandler",
-            "filename": os.path.join(LOG_DIR, "debug_info.log"),
-            "formatter": "detailed",
-        },
-        "console": {
-            "level": "INFO",
-            "class": "logging.StreamHandler",
-            "formatter": "verbose",
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["file"],
-            "level": "DEBUG",
-            "propagate": True,
-        },
-        "django.request": {
-            "handlers": ["error_file"],
-            "level": "ERROR",
-            "propagate": False,
-        },
-        "myapp": {
-            "handlers": ["file", "debug_info_file"],
-            "level": "DEBUG",
-            "propagate": False,
-        },
-    },
-}
+# LOGGING = {
+#     "version": 1,
+#     "disable_existing_loggers": False,
+#     "formatters": {
+#         "verbose": {
+#             "format": "{levelname} {asctime} {module} {message}",
+#             "style": "{",
+#         },
+#         "detailed": {
+#             "format": "{levelname} {asctime} {module} {message} {process:d} {thread:d} ",
+#             "style": "{",
+#         },
+#     },
+#     "handlers": {
+#         "file": {
+#             "level": "DEBUG",
+#             "class": "logging.FileHandler",
+#             "filename": os.path.join(LOG_DIR, "django_debug.log"),
+#             "formatter": "detailed",
+#         },
+#         "error_file": {
+#             "level": "ERROR",
+#             "class": "logging.FileHandler",
+#             "filename": os.path.join(LOG_DIR, "django_error.log"),
+#             "formatter": "verbose",
+#         },
+#         "debug_info_file": {
+#             "level": "DEBUG",
+#             "class": "logging.FileHandler",
+#             "filename": os.path.join(LOG_DIR, "debug_info.log"),
+#             "formatter": "detailed",
+#         },
+#         "console": {
+#             "level": "INFO",
+#             "class": "logging.StreamHandler",
+#             "formatter": "verbose",
+#         },
+#     },
+#     "loggers": {
+#         "django": {
+#             "handlers": ["file"],
+#             "level": "DEBUG",
+#             "propagate": True,
+#         },
+#         "django.request": {
+#             "handlers": ["error_file"],
+#             "level": "ERROR",
+#             "propagate": False,
+#         },
+#         "myapp": {
+#             "handlers": ["file", "debug_info_file"],
+#             "level": "DEBUG",
+#             "propagate": False,
+#         },
+#     },
+# }
 
 
 # MEDIA SETTINGS
@@ -375,7 +377,24 @@ SIMPLE_JWT = {
 }
 
 # EMAIL SETTINGS
-EMAIL_HOST= os.getenv("EMAIL_HOST")
-EMAIL_PORT=os.getenv("EMAIL_PORT")
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = os.getenv("EMAIL_PORT")
 # EMAIL_HOST_USER=
 # EMAIL_HOST_PASSWORD =
+
+
+# CELERY SETTINGS
+CELERY_TIMEZONE = "Asia/Kathmandu"
+# CELERY_TASK_TRACK_STARTED = True
+# CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BROKER_URL = os.getenv("REDIS_URL")
+CELERY_RESULT_BACKEND = "django-db"
+# CELERY_REDIS_MAX_CONNECTIONS = 1
+CELERY_BROKER_POOL_LIMIT = 1
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+CELERY_RESULT_EXTENDED = True
+CELERY_IMPORTS = (
+    "blog_home",
+    "blogs",
+)
