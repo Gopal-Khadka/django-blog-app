@@ -1,5 +1,15 @@
 # Django Blog App
 
+<!--toc:start-->
+- [Django Blog App](#django-blog-app)
+  - [Features](#features)
+  - [TODO](#todo)
+  - [Installation](#installation)
+  - [Django Apps](#django-apps)
+  - [Third Party Packages and Libraries](#third-party-packages-and-libraries)
+  - [LICENSE](#license)
+<!--toc:end-->
+
 A blog web application built with Django for students trying to leave their home country to motivate them back to stay back in Nepal.
 
 ## Features
