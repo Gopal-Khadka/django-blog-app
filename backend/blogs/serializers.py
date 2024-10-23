@@ -47,14 +47,14 @@ class BlogPostSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
         if request is None:
             return None
-        return reverse(viewname="blog-edit", request=request, kwargs={"slug": obj.slug})
+        return reverse(viewname="api:blog-edit", request=request, kwargs={"slug": obj.slug})
 
     def get_endpoint(self, obj):
         request = self.context.get("request")
         if request is None:
             return None
         return reverse(
-            viewname="blog-detail", request=request, kwargs={"slug": obj.slug}
+            viewname="api:blog-detail", request=request, kwargs={"slug": obj.slug}
         )
 
     def create(self, validated_data):

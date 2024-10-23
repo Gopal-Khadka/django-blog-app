@@ -6,7 +6,6 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 from .views import blog_views, forum_views
-
 app_name = "api"
 
 urlpatterns = [
