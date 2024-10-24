@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-
+from blogs.models import BlogPost
 from blogs.forms import ContactForm, CreateBlogForm
-
+from blogs.utils import get_share_links
 
 def index(request):
     return render(request, "blogs/index.html")
@@ -56,7 +56,15 @@ def create_blogs(request):
 
 
 def show_blogs(request, slug):
-    return render(request, "blogs/show_blogs.html", context={"slug": slug})
+    post = get_object_or_404(BlogPost, slug=slug)
+    facebook_url, twitter_url,whatsapp_url,linkedin_url = get_share_links(request,post)
+    return render(request, "blogs/show_blogs.html", context={
+        "slug": slug,
+        'facebook_url': facebook_url,
+        'twitter_url': twitter_url,
+        'whatsapp_url': whatsapp_url,
+        'linkedin_url': linkedin_url,
+        })
 
 
 def search_blogs(request):

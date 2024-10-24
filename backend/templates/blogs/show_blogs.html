@@ -6,6 +6,12 @@
 {% endblock title %}
 {% block content %}
     <div id="blog-list"></div>
+    <div id="share-links">
+    <p> <a href="{{facebook_url}}" target="_blank"> Facebook Url</a> </p>
+    <p> <a href="{{linkedin_url}}" target="_blank"> Linkedin Url</a> </p>
+    <p> <a href="{{whatsapp_url}}" target="_blank"> Whatsapp Url</a> </p>
+    <p> <a href="{{twitter_url}}" target="_blank"> Twitter Url</a> </p>
+    </div>
     <!--Script for fetching data from api-->
     <script>
   const blogList = document.getElementById("blog-list");

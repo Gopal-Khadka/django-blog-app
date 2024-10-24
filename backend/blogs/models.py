@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from tinymce.models import HTMLField
-
+from django.shortcuts import reverse
 from . import utils
 
 
@@ -58,6 +58,12 @@ class BlogPost(models.Model):
 
     def get_tags_list(self):
         return self.tags.all().values_list("name", flat=True)
+        
+    def get_absolute_url(self):
+        return reverse('api:blog-detail', kwargs={'slug': self.slug})
+    
+    def get_full_url(self, request):
+        return request.build_absolute_uri(self.get_absolute_url())
 
     def __str__(self):
         return self.title + " - " + self.author.name
