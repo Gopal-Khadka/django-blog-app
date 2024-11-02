@@ -1,6 +1,11 @@
-function App() {
-  return <h1 className="text-red-500 text-5xl">Hello,world</h1>
-}
+import MainLayout from "./layouts/MainLayout";
 
+function App() {
+  return (
+    <MainLayout>
+      <div>Main Content</div>
+    </MainLayout>
+  );
+}
 
 export default App;
