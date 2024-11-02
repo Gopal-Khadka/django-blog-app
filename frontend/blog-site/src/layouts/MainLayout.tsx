@@ -3,15 +3,17 @@ import NavBar from "../components/NavBar";
 
 const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <div className="bg-slate-950 text-white">
+    <>
       <header>
         <NavBar />
       </header>
       <main>{children}</main>
       <footer>
-        <p>2024 My Website Footer</p>
+        <p className="text-center text-base text-bold">
+          Copyrights &copy; reserved by Gopal Khadka - 2024
+        </p>
       </footer>
-    </div>
+    </>
   );
 };
 
