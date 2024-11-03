@@ -8,18 +8,25 @@ import MainLayout from "./layouts/MainLayout";
 import Login from "./features/auth/Login";
 
 function App() {
+  const routes = [
+    { path: "/", element: <Home /> },
+    { path: "/about", element: <About /> },
+    { path: "/contact", element: <Contact /> },
+    { path: "/forum", element: <Forum /> },
+    { path: "/posts", element: <Posts /> },
+    { path: "/auth", element: <Login /> },
+  ];
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainLayout children={<Home />} />} />
-        <Route path="/about" element={<MainLayout children={<About />} />} />
-        <Route
-          path="/contact"
-          element={<MainLayout children={<Contact />} />}
-        />
-        <Route path="/forum" element={<MainLayout children={<Forum />} />} />
-        <Route path="/posts" element={<MainLayout children={<Posts />} />} />
-        <Route path="/auth" element={<MainLayout children={<Login />} />} />
+        {routes.map(({ path, element }) => (
+          <Route
+            key={path}
+            path={path}
+            element={<MainLayout>{element}</MainLayout>}
+          />
+        ))}
       </Routes>
     </Router>
   );

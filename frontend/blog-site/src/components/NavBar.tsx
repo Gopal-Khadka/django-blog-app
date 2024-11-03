@@ -12,9 +12,9 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-slate-600 flex flex-col md:flex-row px-3 py-2 items-center fixed top-0 w-full">
+    <nav className="bg-slate-600 flex flex-col md:flex-row px-3 py-2 items-center fixed top-0 w-full z-10">
       <div className="font-semibold text-2xl tracking-wide w-1/3">
-        <Link to="/">DesiBlogs</Link>
+        <Link to="/">Namaste Blogs</Link>
       </div>
       <section
         id="menus"
